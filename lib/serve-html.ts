@@ -165,7 +165,9 @@ function rewriteLegacyLinks(html: string): string {
     .replace(/href="Bundle complet\.html"/g, 'href="/oto3"')
     .replace(/href="BUNDLE-page-vente\.html"/g, 'href="/bundle"')
     .replace(/href="R%C3%A9sum%C3%A9 du guide\.html"/g, 'href="/resume"')
-    .replace(/href="Résumé du guide\.html"/g, 'href="/resume"');
+    .replace(/href="Résumé du guide\.html"/g, 'href="/resume"')
+    // Feuille de style relative -> chemin absolu servi depuis /public
+    .replace(/href="fev\.css"/g, 'href="/fev.css"');
 }
 
 export function loadHtmlPage(filename: string, productId: ProductId): string {
