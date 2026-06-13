@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTO 2 — Kit Urgences Piscine · Fini l'eau verte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="fev.css" rel="stylesheet">
+<style>
+.hero{padding:64px 0 84px}
+.hero h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(38px,5.6vw,72px);line-height:1.03;letter-spacing:-0.015em;color:var(--ink);margin:28px 0 26px;max-width:900px}
+.hero h1 .it{font-style:italic;font-weight:500;color:var(--aqua)}
+.hero-sub{font-size:20px;line-height:1.7;color:var(--ink-65);max-width:580px}
+.hero-eyebrow{display:flex;align-items:center;gap:12px}
+.hero-eyebrow::after{content:'';height:1px;width:48px;background:var(--hair)}
+
+/* scenario pull note */
+.scenario{margin:44px 0 0;max-width:760px;padding-left:26px;border-left:2px solid var(--aqua)}
+.scenario .sk{display:block;margin-bottom:10px}
+.scenario p{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2.3vw,25px);line-height:1.45;color:var(--ink)}
+
+/* 12 fiches preview */
+.fiches-preview{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair);border-left:1px solid var(--hair);margin:56px 0 0}
+.fp-cell{padding:22px 22px 20px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.fp-cell .fpn{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:24px;color:var(--ink);opacity:0.18;line-height:0.8}
+.fp-cell h3{font-size:15px;font-weight:600;color:var(--ink);margin:14px 0 6px;line-height:1.25}
+.fp-cell .ft{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--aqua);font-weight:600}
+
+/* MAIN */
+.main{padding:110px 0}
+.fiches-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:60px;border-top:1px solid var(--hair);border-left:1px solid var(--hair)}
+.fiche-card{padding:36px 40px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.fc-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px}
+.fc-head h4{font-family:'Playfair Display',serif;font-weight:700;font-size:21px;color:var(--ink);line-height:1.2}
+.fc-timing{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--aqua);font-weight:600;white-space:nowrap;flex-shrink:0}
+.fc-steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:12px}
+.fc-steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:8px;font-size:15px;line-height:1.5;color:var(--ink-85)}
+.fc-steps li::before{content:counter(s);font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:18px;color:var(--aqua);line-height:1.3}
+.more-note{margin-top:36px;padding:24px 30px;border:1px solid var(--hair);border-radius:4px;font-size:16px;line-height:1.7;color:var(--ink-65);text-align:center}
+.more-note strong{color:var(--ink);font-weight:600}
+
+/* FORMAT (deep blue) */
+.format{padding:96px 0}
+.format-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:center;max-width:1000px;margin:0 auto}
+.format-visual{display:flex;gap:18px;align-items:flex-end;justify-content:center}
+.mock{background:#fff;border-radius:3px;padding:16px 14px;box-shadow:0 30px 60px -25px rgba(0,0,0,0.6)}
+.mock-recto{width:150px;min-height:212px}
+.mock-verso{width:110px;min-height:156px;opacity:0.82}
+.mock .m-rule{height:4px;border-radius:2px;background:var(--aqua);margin-bottom:12px}
+.mock .m-kick{font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--aqua);font-weight:700;margin-bottom:6px}
+.mock .m-title{font-family:'Playfair Display',serif;font-weight:700;font-size:12px;color:var(--ink);margin-bottom:12px;line-height:1.1}
+.mock .m-step{display:flex;gap:6px;align-items:center;margin-bottom:7px}
+.mock .m-sn{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:11px;color:var(--aqua)}
+.mock .m-line{height:3px;flex:1;background:#E7EDF2;border-radius:2px}
+.mock .m-foot{font-size:7px;letter-spacing:0.16em;text-transform:uppercase;color:#9fb0c0;text-align:center;margin-top:10px;border-top:1px solid #eef2f5;padding-top:8px}
+.format-text h3{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,3vw,34px);color:#fff;line-height:1.15;margin-bottom:18px}
+.format-text p{font-size:17px;line-height:1.7;color:rgba(255,255,255,0.7);margin-bottom:24px;max-width:480px}
+.format-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+.format-list li{display:grid;grid-template-columns:22px 1fr;gap:6px;font-size:15.5px;color:rgba(255,255,255,0.85);line-height:1.5}
+.format-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--aqua);margin-top:0.6em}
+
+/* PRICING */
+.pricing{padding:110px 0 120px}
+.price-card{max-width:520px;margin:0 auto;border:1px solid var(--hair);border-radius:4px;padding:52px 56px;text-align:center;box-shadow:0 30px 80px -50px rgba(10,37,64,0.4)}
+.pc-badge{display:inline-block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--aqua);font-weight:600;margin-bottom:18px}
+.pc-title{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--ink);line-height:1.25;margin-bottom:8px}
+.pc-count{font-size:14px;color:var(--ink-45);margin-bottom:28px}
+.pc-was{font-size:16px;color:var(--ink-30);text-decoration:line-through}
+.pc-amt{font-family:'Playfair Display',serif;font-weight:800;font-size:80px;line-height:0.85;color:var(--ink);margin:4px 0}
+.pc-amt sup{font-size:32px;vertical-align:top;font-style:italic;font-weight:600;color:var(--aqua)}
+.pc-note{font-size:13px;color:var(--ink-45);margin-bottom:28px}
+.price-card .cta{width:100%}
+.pc-urgency{margin-top:22px;padding:14px 20px;border:1px solid var(--hair);border-radius:4px;font-size:13.5px;line-height:1.6;color:var(--ink-65)}
+.pc-urgency strong{color:var(--ink);font-weight:600}
+
+@media(max-width:760px){.fiches-preview{grid-template-columns:repeat(2,1fr)}.fiches-grid{grid-template-columns:1fr}.format-grid{grid-template-columns:1fr;gap:48px}}
+@media(max-width:600px){.main,.format{padding:72px 0}.price-card{padding:36px 28px}.fiche-card{padding:30px 26px}}
+</style>
+</head>
+<body>
+
+<!-- TUNNEL -->
+<nav class="tunnel">
+  <span class="tunnel-step done">Ebook</span>
+  <span class="tunnel-sep">/</span>
+  <span class="tunnel-step done">Outils</span>
+  <span class="tunnel-sep">/</span>
+  <span class="tunnel-step current">Fiches urgences</span>
+  <span class="tunnel-sep">/</span>
+  <span class="tunnel-step next">VIP</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero" data-screen-label="Hero">
+  <div class="wrap">
+    <div class="hero-eyebrow rv"><span class="kicker">Offre disponible une seule fois ici</span></div>
+    <h1 class="rv">Face à une urgence, vous n'avez pas le temps de <span class="it">chercher la bonne page</span></h1>
+    <p class="hero-sub rv">12 fiches plastifiables format A5 recto/verso — une par situation. Eau verte, algues, choc, hivernage, vacances, orage… Tout est là en 30 secondes.</p>
+
+    <div class="scenario rv">
+      <span class="kicker sk">Scénario réel</span>
+      <p>C'est jeudi soir, vous avez des invités dimanche. Vous soulevez la bâche et découvrez une eau trouble. Dans l'angoisse, vous allez chercher dans votre guide, vous lisez 3 chapitres… Avec les fiches, vous avez le protocole exact en main en 10 secondes.</p>
+    </div>
+
+    <div class="fiches-preview rv" data-stagger>
+      <div class="fp-cell rv"><div class="fpn">01</div><h3>Eau verte légère</h3><div class="ft">Agir dans 2h</div></div>
+      <div class="fp-cell rv"><div class="fpn">02</div><h3>Eau verte opaque</h3><div class="ft">Traitement choc</div></div>
+      <div class="fp-cell rv"><div class="fpn">03</div><h3>Eau trouble</h3><div class="ft">Diagnostic 30 min</div></div>
+      <div class="fp-cell rv"><div class="fpn">04</div><h3>Eau mousseuse</h3><div class="ft">Action immédiate</div></div>
+      <div class="fp-cell rv"><div class="fpn">05</div><h3>Odeur de chlore</h3><div class="ft">Chloramines</div></div>
+      <div class="fp-cell rv"><div class="fpn">06</div><h3>Yeux qui piquent</h3><div class="ft">pH ou chloram.</div></div>
+      <div class="fp-cell rv"><div class="fpn">07</div><h3>Dépôts calcaires</h3><div class="ft">TH trop élevé</div></div>
+      <div class="fp-cell rv"><div class="fpn">08</div><h3>Taches brunes</h3><div class="ft">Métaux ferreux</div></div>
+      <div class="fp-cell rv"><div class="fpn">09</div><h3>Après un orage</h3><div class="ft">Agir dans 6h</div></div>
+      <div class="fp-cell rv"><div class="fpn">10</div><h3>Week-end chargé</h3><div class="ft">Préparer J-2</div></div>
+      <div class="fp-cell rv"><div class="fpn">11</div><h3>Départ vacances</h3><div class="ft">Protocole 48h</div></div>
+      <div class="fp-cell rv"><div class="fpn">12</div><h3>Hivernage raté</h3><div class="ft">Récupération</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- MAIN -->
+<section class="main" data-screen-label="Détail des fiches">
+  <span class="section-num">12</span>
+  <div class="wrap section-inner">
+    <div class="lead-head rv">
+      <span class="kicker">Ce que contient chaque fiche</span>
+      <h2 class="section-title">12 fiches. 12 situations. <span class="it">0 temps perdu.</span></h2>
+      <p class="lead-text">Chaque fiche suit le même format : diagnostic en 2 questions, protocole numéroté, erreurs à éviter, et le produit exact à utiliser.</p>
+    </div>
+
+    <div class="fiches-grid" data-stagger>
+      <div class="fiche-card rv">
+        <div class="fc-head"><h4>01 — Eau verte légère</h4><span class="fc-timing">Agir dans 2h</span></div>
+        <ol class="fc-steps">
+          <li>Tester le pH en premier (cible 7.2)</li>
+          <li>Corriger le pH AVANT tout chlore</li>
+          <li>Demi-dose de chlore choc + filtration 24h/24</li>
+          <li>Brosser les parois + aspirer fond</li>
+          <li>Résultat visible en 24–48h</li>
+        </ol>
+      </div>
+      <div class="fiche-card rv">
+        <div class="fc-head"><h4>02 — Eau verte opaque</h4><span class="fc-timing">Protocole 72h</span></div>
+        <ol class="fc-steps">
+          <li>Brossage intensif toutes surfaces</li>
+          <li>pH à 7.2 exact — attendre 4-6h</li>
+          <li>Chlore choc 30-50g/m³ dilué en seaux</li>
+          <li>Filtration 24h/24 — 72h minimum</li>
+          <li>Algicide 12h APRÈS le chlore</li>
+          <li>Aspirer dépôts à l'égout (vanne Waste)</li>
+        </ol>
+      </div>
+      <div class="fiche-card rv">
+        <div class="fc-head"><h4>03 — Eau trouble / laiteuse</h4><span class="fc-timing">Diagnostic 30 min</span></div>
+        <ol class="fc-steps">
+          <li>Vérifier la pression du filtre (nettoyer si +0.3 bar)</li>
+          <li>Tester pH — si &gt; 7.8 → calcaire en suspension</li>
+          <li>Augmenter filtration 24h/24</li>
+          <li>Si persiste → floculant (sable uniquement)</li>
+          <li>Aspirer le dépôt à l'égout après 12-24h</li>
+        </ol>
+      </div>
+      <div class="fiche-card rv">
+        <div class="fc-head"><h4>09 — Après un orage</h4><span class="fc-timing">Agir dans 6h</span></div>
+        <ol class="fc-steps">
+          <li>Retirer tous les débris de surface</li>
+          <li>Tester pH + chlore (apport d'eau dilue tout)</li>
+          <li>Traitement choc préventif demi-dose</li>
+          <li>Filtration +4h supplémentaires ce jour</li>
+          <li>Test de contrôle le lendemain matin</li>
+        </ol>
+      </div>
+      <div class="fiche-card rv">
+        <div class="fc-head"><h4>10 — Avant un week-end chargé</h4><span class="fc-timing">J-2 obligatoire</span></div>
+        <ol class="fc-steps">
+          <li>J-2 : test complet pH + chlore + TAC</li>
+          <li>J-2 : traitement choc préventif demi-dose</li>
+          <li>J-1 : vérifier chlore entre 2 et 3 mg/L</li>
+          <li>Jour J : rappel chlore si &gt;20 baigneurs</li>
+          <li>Lendemain : test + rééquilibrage</li>
+        </ol>
+      </div>
+      <div class="fiche-card rv">
+        <div class="fc-head"><h4>11 — Départ en vacances</h4><span class="fc-timing">Protocole 48h avant</span></div>
+        <ol class="fc-steps">
+          <li>J-2 : traitement choc + rééquilibrage complet</li>
+          <li>J-1 : algicide longue durée dose maximale</li>
+          <li>Programmer filtration 14h/j (si automatique)</li>
+          <li>Hausser le chlore à 3 mg/L avant départ</li>
+          <li>Couvrir avec bâche opaque (limite algues)</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="more-note rv">
+      <strong>+ 6 autres fiches incluses :</strong> odeur de chlore, yeux qui piquent, dépôts calcaires, taches brunes/métaux, eau mousseuse, hivernage raté.
+    </div>
+  </div>
+</section>
+
+<!-- FORMAT -->
+<section class="format ink-section" data-screen-label="Format">
+  <div class="wrap section-inner">
+    <div class="format-grid">
+      <div class="format-visual rv">
+        <div class="mock mock-recto">
+          <div class="m-rule"></div>
+          <div class="m-kick">Fiche 01 — Eau verte</div>
+          <div class="m-title">Diagnostic rapide</div>
+          <div class="m-step"><span class="m-sn">1</span><span class="m-line"></span></div>
+          <div class="m-step"><span class="m-sn">2</span><span class="m-line"></span></div>
+          <div class="m-step"><span class="m-sn">3</span><span class="m-line"></span></div>
+          <div class="m-step"><span class="m-sn">4</span><span class="m-line"></span></div>
+          <div class="m-foot">Recto</div>
+        </div>
+        <div class="mock mock-verso">
+          <div class="m-rule"></div>
+          <div class="m-kick">Erreurs à éviter</div>
+          <div class="m-line" style="margin-bottom:7px"></div>
+          <div class="m-line" style="width:70%;margin-bottom:18px"></div>
+          <div class="m-kick">Produits exacts</div>
+          <div class="m-line" style="margin-bottom:7px"></div>
+          <div class="m-line" style="width:60%"></div>
+          <div class="m-foot">Verso</div>
+        </div>
+      </div>
+      <div class="format-text rv">
+        <h3>Un format conçu pour le local technique</h3>
+        <p>Chaque fiche fait exactement la taille d'une demi-feuille A4 (A5). Imprimez, plastifiez, accrochez. Elles résistent à l'humidité et à l'eau chlorée.</p>
+        <ul class="format-list">
+          <li>Format A5 (148×210 mm) — plastifiable</li>
+          <li>Recto : protocole en étapes numérotées</li>
+          <li>Verso : erreurs à éviter + produits exacts</li>
+          <li>Couleur par catégorie (urgence, prévention…)</li>
+          <li>PDF haute résolution inclus (300 dpi)</li>
+          <li>Compatible imprimante maison ou copie rapide</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" data-screen-label="Prix">
+  <div class="col">
+    <div class="lead-head rv" style="text-align:center">
+      <span class="kicker" style="display:block;margin-bottom:18px">Complément indispensable à votre guide</span>
+      <h2 class="section-title">12 fiches prêtes à <span class="it">plastifier</span></h2>
+      <p class="lead-text" style="margin:18px auto 0;text-align:center">Disponibles uniquement ici, uniquement maintenant.</p>
+    </div>
+    <div class="price-card rv">
+      <span class="pc-badge">Kit Urgences Piscine</span>
+      <div class="pc-title">12 fiches action rapide · PDF haute résolution</div>
+      <div class="pc-count">+ toutes les mises à jour · Accès à vie</div>
+      <div class="pc-was">Valeur 47€</div>
+      <div class="pc-amt"><sup>€</sup>17</div>
+      <div class="pc-note">Paiement unique — jamais d'abonnement</div>
+      <a href="https://systeme.io" class="cta">
+        Oui, j'ajoute les 12 fiches pour 17€
+        <span class="sub">Accès immédiat · PDF + sources modifiables · Garanti 30 jours</span>
+      </a>
+      <div class="pc-urgency"><strong>Cette offre disparaît</strong> dès que vous quittez cette page. Elle n'est pas disponible séparément.</div>
+      <a class="cta-decline" href="https://systeme.io" style="display:block;margin-top:18px">Non merci, je préfère chercher dans mon guide en cas d'urgence</a>
+    </div>
+  </div>
+</section>
+
+<footer class="fev-footer">
+  <div class="f-brand">Fini l'eau verte</div>
+  <p>© 2026 · Tous droits réservés · <a href="#">CGV</a> · <a href="#">Contact</a></p>
+</footer>
+
+<script src="fev.js"></script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bundle Complet — Fini l'eau verte · Économisez 45%</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="fev.css" rel="stylesheet">
+<style>
+/* urgency bar */
+.urgency{background:var(--ink);color:rgba(255,255,255,0.78);text-align:center;padding:11px 24px;font-size:11.5px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.urgency strong{color:var(--gold);font-weight:600}
+.urgency .cd{font-variant-numeric:tabular-nums;letter-spacing:0.1em;color:#fff;font-weight:600;border-left:1px solid rgba(255,255,255,0.2);padding-left:14px}
+
+.hero{padding:64px 0 84px}
+.hero h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(40px,5.8vw,76px);line-height:1.02;letter-spacing:-0.015em;color:var(--ink);margin:28px 0 24px;max-width:900px}
+.hero h1 .it{font-style:italic;font-weight:500;color:var(--aqua)}
+.hero-sub{font-size:20px;line-height:1.7;color:var(--ink-65);max-width:580px}
+.hero-eyebrow{display:flex;align-items:center;gap:12px}
+.hero-eyebrow::after{content:'';height:1px;width:48px;background:var(--hair)}
+
+/* products mini */
+.prods-mini{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair);border-left:1px solid var(--hair);margin:52px 0 44px}
+.pm-cell{padding:24px 22px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);cursor:pointer;transition:background 0.25s}
+.pm-cell:hover{background:var(--hair-soft)}
+.pm-cell .pmn{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:24px;color:var(--ink);opacity:0.18;line-height:0.8}
+.pm-cell h3{font-size:15px;font-weight:600;color:var(--ink);margin:14px 0 8px;line-height:1.25}
+.pm-cell .pmp{font-size:13px;color:var(--ink-30);text-decoration:line-through;margin-right:8px}
+.pm-cell .pmi{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--aqua);font-weight:600}
+
+/* price hero */
+.price-hero{display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap;margin-bottom:34px}
+.price-hero .was{font-size:16px;color:var(--ink-45);text-decoration:line-through;display:block;margin-bottom:4px}
+.price-hero .big{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(60px,8vw,92px);line-height:0.82;color:var(--ink)}
+.price-hero .big sup{font-size:34px;vertical-align:top;font-style:italic;font-weight:600;color:var(--aqua)}
+.price-hero .save{font-size:14px;letter-spacing:0.04em;color:var(--aqua);font-weight:600;padding-bottom:10px}
+.hero-guar{font-size:13px;color:var(--ink-45);margin-top:16px}
+
+/* detail */
+.detail{padding:110px 0}
+.pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:60px;border-top:1px solid var(--hair);border-left:1px solid var(--hair)}
+.pd-card{padding:40px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.pd-top{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.pd-num{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:40px;line-height:0.8;color:var(--ink);opacity:0.16}
+.pd-card h4{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--ink);line-height:1.2}
+.pd-sub{font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-45);margin-bottom:18px}
+.pd-desc{font-size:16px;line-height:1.7;color:var(--ink-65);margin-bottom:20px}
+.pd-feat{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:22px}
+.pd-feat li{display:grid;grid-template-columns:20px 1fr;gap:6px;font-size:15px;line-height:1.5;color:var(--ink-85)}
+.pd-feat li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--aqua);margin-top:0.6em}
+.pd-val{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--hair);padding-top:16px;font-size:13px}
+.pd-val .w{color:var(--ink-45);text-decoration:line-through}
+.pd-val .i{color:var(--aqua);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;font-size:12px}
+
+/* comparison */
+.compare{padding:110px 0}
+.ctable{max-width:680px;margin:56px auto 0;border:1px solid var(--hair);border-radius:4px;overflow:hidden}
+.crow{display:grid;grid-template-columns:1.4fr 1fr 1fr;border-bottom:1px solid var(--hair)}
+.crow:last-child{border-bottom:none}
+.ccell{padding:16px 22px;font-size:15px;display:flex;align-items:center}
+.ccell.head{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--ink-45);background:var(--hair-soft)}
+.ccell.head.bd{color:var(--aqua);justify-content:center}
+.ccell.lbl{color:var(--ink-85);font-weight:500}
+.ccell.sep{justify-content:center;color:var(--ink-45)}
+.ccell.bun{justify-content:center;color:var(--aqua);font-weight:600}
+.crow.total .ccell{padding-top:22px;padding-bottom:22px;font-family:'Playfair Display',serif}
+.crow.total .lbl{font-weight:700;font-size:16px;color:var(--ink)}
+.crow.total .sep{text-decoration:line-through;color:var(--ink-30);font-size:20px}
+.crow.total .bun{flex-direction:column;gap:2px}
+.crow.total .bun .amt{font-family:'Playfair Display',serif;font-weight:800;font-size:30px;color:var(--ink)}
+.crow.total .bun .amt sup{font-size:15px;vertical-align:top;font-style:italic;color:var(--aqua)}
+.crow.total .bun .pct{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.06em;color:var(--aqua);font-weight:600}
+
+/* final pricing */
+.pricing{padding:0 0 120px}
+.fp-card{max-width:560px;margin:0 auto;border:1px solid var(--hair);border-radius:4px;padding:52px 56px;text-align:center;box-shadow:0 30px 80px -50px rgba(10,37,64,0.4)}
+.fp-badge{display:inline-block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--aqua);font-weight:600;margin-bottom:28px}
+.vrows{text-align:left;margin-bottom:8px}
+.vrow{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:13px 0;border-bottom:1px solid var(--hair-soft);font-size:15px}
+.vrow span:first-child{color:var(--ink-85)}
+.vrow .crossed{text-decoration:line-through;color:var(--ink-30);flex-shrink:0}
+.fp-total{display:flex;justify-content:space-between;align-items:flex-end;padding:26px 0 8px;border-top:1px solid var(--hair);margin-top:4px}
+.fp-total .lbl{font-size:14px;color:var(--ink-65);text-align:left}
+.fp-total .amt{font-family:'Playfair Display',serif;font-weight:800;font-size:72px;line-height:0.8;color:var(--ink)}
+.fp-total .amt sup{font-size:30px;vertical-align:top;font-style:italic;font-weight:600;color:var(--aqua)}
+.fp-eco{display:inline-block;font-size:13px;letter-spacing:0.06em;color:var(--aqua);margin:18px 0 30px}
+.fp-card .cta{width:100%}
+.fp-foot{font-size:12.5px;color:var(--ink-45);margin-top:16px}
+
+/* guarantee */
+.guarantee{max-width:640px;margin:56px auto 0;display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center;padding-top:48px;border-top:1px solid var(--hair)}
+.seal{width:96px;height:96px;border-radius:50%;flex-shrink:0;border:1px solid var(--aqua);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.seal .sn{font-family:'Playfair Display',serif;font-weight:800;font-size:34px;color:var(--ink);line-height:0.9}
+.seal .st{font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--aqua);margin-top:4px}
+.guarantee-body h4{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:22px;color:var(--ink);margin-bottom:10px}
+.guarantee-body p{font-size:15.5px;line-height:1.7;color:var(--ink-65)}
+
+/* faq */
+.faq{padding:110px 0}
+
+/* sticky */
+.sticky{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(10,37,64,0.96);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.12);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;transform:translateY(110%);transition:transform 0.5s cubic-bezier(0.22,1,0.36,1)}
+.sticky.show{transform:none}
+.sticky-left .sl{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+.sticky-left .sp{font-family:'Playfair Display',serif;font-weight:800;font-size:24px;color:#fff;margin-top:2px}
+.sticky-left .sp .w{font-size:14px;color:rgba(255,255,255,0.35);text-decoration:line-through;margin-right:8px;font-weight:400}
+.sticky-left .sp .pct{font-family:'Inter',sans-serif;font-size:12px;color:var(--aqua);font-weight:600;margin-left:6px}
+.sticky .cta{padding:13px 26px;font-size:14px;flex-direction:row}
+
+@media(max-width:760px){.prods-mini{grid-template-columns:repeat(2,1fr)}.pd-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.detail,.compare,.faq{padding:72px 0}.fp-card{padding:36px 28px}.pd-card{padding:32px 26px}.fp-total .amt{font-size:56px}.ctable{font-size:13px}.ccell{padding:13px 14px}.sticky{padding:12px 20px}.sticky-left .sl{display:none}}
+</style>
+</head>
+<body>
+
+<!-- URGENCY -->
+<div class="urgency">
+  <span>Offre bundle — <strong>économisez 45%</strong> en prenant les 4 outils ensemble</span>
+  <span class="cd" id="cd">14:59</span>
+</div>
+
+<!-- HERO -->
+<section class="hero" data-screen-label="Hero">
+  <div class="wrap">
+    <div class="hero-eyebrow rv"><span class="kicker">Bundle complet — Offre exclusive</span></div>
+    <h1 class="rv">Les 4 outils, les 4 guides. <span class="it">Un seul prix — économisez 45%.</span></h1>
+    <p class="hero-sub rv">Tout ce qu'il faut pour appliquer le guide, gérer chaque urgence, planifier chaque saison et envisager l'électrolyse. Une bibliothèque complète pour propriétaire exigeant.</p>
+
+    <div class="prods-mini rv" data-stagger>
+      <div class="pm-cell rv" data-jump="0"><div class="pmn">01</div><h3>Kit Outils Premium</h3><span class="pmp">27€</span><span class="pmi">inclus</span></div>
+      <div class="pm-cell rv" data-jump="1"><div class="pmn">02</div><h3>12 Fiches Urgences</h3><span class="pmp">17€</span><span class="pmi">inclus</span></div>
+      <div class="pm-cell rv" data-jump="2"><div class="pmn">03</div><h3>Guide Saison Parfaite</h3><span class="pmp">27€</span><span class="pmi">inclus</span></div>
+      <div class="pm-cell rv" data-jump="3"><div class="pmn">04</div><h3>Guide Électrolyse Sel</h3><span class="pmp">17€</span><span class="pmi">inclus</span></div>
+    </div>
+
+    <div class="rv">
+      <div class="price-hero">
+        <div>
+          <span class="was">Valeur totale séparément : 88€</span>
+          <span class="big"><sup>€</sup>49</span>
+        </div>
+        <span class="save">Vous économisez 39€ · −45%</span>
+      </div>
+      <a href="#pricing" class="cta">
+        Oui, je prends le bundle complet
+        <span class="sub">4 PDF · Accès immédiat · Garanti 30 jours</span>
+      </a>
+      <div class="hero-guar">Paiement sécurisé · Pas d'abonnement · 30 jours satisfait ou remboursé</div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- DETAIL -->
+<section class="detail" data-screen-label="Contenu">
+  <span class="section-num">04</span>
+  <div class="wrap section-inner">
+    <div class="lead-head rv">
+      <span class="kicker">Ce que vous recevez</span>
+      <h2 class="section-title">4 guides PDF complets — <span class="it">contenu détaillé</span></h2>
+      <p class="lead-text">Chaque guide est indépendant et complémentaire. Ensemble, ils couvrent l'intégralité de la gestion de votre piscine sur une année complète.</p>
+    </div>
+
+    <div class="pd-grid" data-stagger>
+      <div class="pd-card rv">
+        <div class="pd-top"><span class="pd-num">01</span><h4>Kit Outils Premium</h4></div>
+        <div class="pd-sub">Checklists · Planner · Calculateur · Guide achat</div>
+        <p class="pd-desc">Les 4 checklists imprimables (routine, choc, hivernage, sortie), le planner 12 mois avec tâches pré-remplies, le calculateur de dosage par volume et la sélection des 18 meilleurs produits.</p>
+        <ul class="pd-feat">
+          <li>4 checklists A4 plastifiables (recto/verso)</li>
+          <li>Planner saisonnier 12 mois illustré</li>
+          <li>Tableau de dosage pour tous les volumes (10–100 m³)</li>
+          <li>18 produits comparés — recommandés vs à éviter</li>
+        </ul>
+        <div class="pd-val"><span class="w">Vendu séparément : 27€</span><span class="i">Inclus</span></div>
+      </div>
+      <div class="pd-card rv">
+        <div class="pd-top"><span class="pd-num">02</span><h4>12 Fiches Action Rapide</h4></div>
+        <div class="pd-sub">Urgences · Protocoles instantanés</div>
+        <p class="pd-desc">12 fiches A5 plastifiables, une par situation d'urgence. Eau verte, algues noires, orage, vacances, mousse, irritations, dépôts calcaires, taches brunes et plus.</p>
+        <ul class="pd-feat">
+          <li>Format A5 recto/verso — à plastifier et accrocher</li>
+          <li>Protocole en étapes numérotées par situation</li>
+          <li>Erreurs à éviter + produits exacts au verso</li>
+          <li>Couvre 12 situations des plus fréquentes</li>
+        </ul>
+        <div class="pd-val"><span class="w">Vendu séparément : 17€</span><span class="i">Inclus</span></div>
+      </div>
+      <div class="pd-card rv">
+        <div class="pd-top"><span class="pd-num">03</span><h4>Guide Saison Parfaite</h4></div>
+        <div class="pd-sub">Canicule · Vacances · Cas résistants</div>
+        <p class="pd-desc">Protocoles saisonniers complets — canicule, préparation vacances, fin de saison. Plus les cas avancés : algues noires, phosphates chroniques, sur-stabilisation CYA.</p>
+        <ul class="pd-feat">
+          <li>Protocole canicule complet (eau &gt; 28°C)</li>
+          <li>Préparation vacances — absence jusqu'à 3 semaines</li>
+          <li>Algues noires — le seul protocole qui fonctionne</li>
+          <li>Sur-stabilisation CYA et phosphates chroniques</li>
+        </ul>
+        <div class="pd-val"><span class="w">Vendu séparément : 27€</span><span class="i">Inclus</span></div>
+      </div>
+      <div class="pd-card rv">
+        <div class="pd-top"><span class="pd-num">04</span><h4>Guide Électrolyse au Sel</h4></div>
+        <div class="pd-sub">Choisir · Installer · ROI calculé</div>
+        <p class="pd-desc">Tout sur le passage à l'électrolyse au sel : comment choisir son électrolyseur, l'installer correctement, l'entretenir et calculer son retour sur investissement sur 5–10 ans.</p>
+        <ul class="pd-feat">
+          <li>Comparatif des types d'électrolyseurs</li>
+          <li>Installation pas à pas avec détail des raccords</li>
+          <li>Réglages saisonniers et détartrage cellule</li>
+          <li>Tableau de calcul ROI selon votre volume</li>
+        </ul>
+        <div class="pd-val"><span class="w">Vendu séparément : 17€</span><span class="i">Inclus</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="compare" data-screen-label="Comparaison">
+  <span class="section-num">VS</span>
+  <div class="col section-inner">
+    <div class="lead-head rv" style="text-align:center">
+      <span class="kicker" style="display:block;margin-bottom:18px">Comparaison</span>
+      <h2 class="section-title">Séparément ou <span class="it">en bundle</span> ?</h2>
+    </div>
+    <div class="ctable rv">
+      <div class="crow">
+        <div class="ccell head">Produit</div>
+        <div class="ccell head bd" style="color:var(--ink-45)">Séparément</div>
+        <div class="ccell head bd">Bundle</div>
+      </div>
+      <div class="crow"><div class="ccell lbl">Kit Outils Premium</div><div class="ccell sep">27€</div><div class="ccell bun">inclus</div></div>
+      <div class="crow"><div class="ccell lbl">12 Fiches Urgences</div><div class="ccell sep">17€</div><div class="ccell bun">inclus</div></div>
+      <div class="crow"><div class="ccell lbl">Guide Saison Parfaite</div><div class="ccell sep">27€</div><div class="ccell bun">inclus</div></div>
+      <div class="crow"><div class="ccell lbl">Guide Électrolyse Sel</div><div class="ccell sep">17€</div><div class="ccell bun">inclus</div></div>
+      <div class="crow total">
+        <div class="ccell lbl">Total</div>
+        <div class="ccell sep">88€</div>
+        <div class="ccell bun"><span class="amt"><sup>€</sup>49</span><span class="pct">−45% · −39€</span></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px" class="rv">
+      <a href="#pricing" class="cta">
+        Je prends le bundle et j'économise 39€
+        <span class="sub">4 PDF · Accès immédiat · Garanti 30 jours</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing" style="padding-top:110px" data-screen-label="Prix">
+  <div class="col">
+    <div class="lead-head rv" style="text-align:center">
+      <span class="kicker" style="display:block;margin-bottom:18px">Votre investissement</span>
+      <h2 class="section-title">Bundle complet — <span class="it">49€</span></h2>
+    </div>
+    <div class="fp-card rv">
+      <span class="fp-badge">Bundle complet · 4 guides PDF</span>
+      <div class="vrows">
+        <div class="vrow"><span>Kit Outils Premium (checklists + planner + calculateur)</span><span class="crossed">27€</span></div>
+        <div class="vrow"><span>Kit 12 Fiches Action Rapide</span><span class="crossed">17€</span></div>
+        <div class="vrow"><span>Guide Saison Parfaite (canicule + cas avancés)</span><span class="crossed">27€</span></div>
+        <div class="vrow"><span>Guide Électrolyse au Sel</span><span class="crossed">17€</span></div>
+      </div>
+      <div class="fp-total">
+        <span class="lbl">Votre prix bundle</span>
+        <span class="amt"><sup>€</sup>49</span>
+      </div>
+      <div class="fp-eco">Vous économisez 39€ — soit 45% de réduction</div>
+      <a href="https://systeme.io" class="cta">
+        Je commande le bundle complet — 49€
+        <span class="sub">4 PDF · Accès immédiat par email · Paiement sécurisé SSL</span>
+      </a>
+      <div class="fp-foot">CB · PayPal · Virement · Pas d'abonnement</div>
+    </div>
+
+    <div class="guarantee rv">
+      <div class="seal"><div class="sn">30</div><div class="st">jours</div></div>
+      <div class="guarantee-body">
+        <h4>Satisfait ou 100 % remboursé</h4>
+        <p>Si dans les 30 jours vous estimez que les guides ne vous ont pas apporté de valeur, un email suffit. Remboursement intégral sous 48h, sans justification demandée.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- FAQ -->
+<section class="faq" data-screen-label="FAQ">
+  <span class="section-num">FAQ</span>
+  <div class="col section-inner">
+    <div class="lead-head rv" style="text-align:center">
+      <span class="kicker" style="display:block;margin-bottom:18px">Questions sur le bundle</span>
+      <h2 class="section-title">Tout ce que vous <span class="it">voulez savoir</span></h2>
+    </div>
+    <div class="faq-list rv" style="margin-top:56px">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Dans quel format sont les guides ?</span><span class="faq-arrow"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">4 fichiers PDF téléchargeables, reçus par email immédiatement après l'achat. Compatibles avec tous les appareils, imprimables en A4, lisibles hors connexion. Accès à vie sans abonnement.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Les guides sont-ils adaptés à tous les types de piscines ?</span><span class="faq-arrow"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Oui. Les guides couvrent les piscines enterrées, semi-enterrées et hors-sol, avec des sections spécifiques pour chaque type de revêtement (liner, carrelage, polyester) et chaque système de filtration (sable, cartouche, électrolyse).</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Quelle est la différence avec le guide principal ?</span><span class="faq-arrow"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Le guide principal (160 pages) explique tous les principes en profondeur. Les 4 guides du bundle sont des outils opérationnels : checklists à cocher, protocoles d'urgence en 10 secondes, planner saisonnier pré-rempli, calculateur de doses. Complémentaires, pas redondants.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Est-ce que je peux acheter les guides séparément après ?</span><span class="faq-arrow"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Oui, chaque guide est disponible séparément à son prix individuel (17€ ou 27€ selon le guide). Mais la remise de 45% du bundle n'est disponible que sur cette page — une fois que vous quittez, le prix bundle disparaît.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="fev-footer">
+  <div class="f-brand">Fini l'eau verte</div>
+  <p>© 2026 · Tous droits réservés</p>
+  <p><a href="#">Mentions légales</a> · <a href="#">CGV</a> · <a href="#">Politique de confidentialité</a></p>
+</footer>
+
+<!-- STICKY -->
+<div class="sticky" id="sticky">
+  <div class="sticky-left">
+    <div class="sl">Bundle complet — 4 guides PDF</div>
+    <div class="sp"><span class="w">88€</span>49€<span class="pct">−45%</span></div>
+  </div>
+  <a href="#pricing" class="cta">Je prends le bundle</a>
+</div>
+
+<script src="fev.js"></script>
+<script>
+startCountdown('cd', 14*60+59);
+initSticky('sticky', 360);
+document.querySelectorAll('.pm-cell').forEach(function(el){
+  el.addEventListener('click',function(){
+    var i=+el.getAttribute('data-jump');
+    var cards=document.querySelectorAll('.pd-card');
+    if(cards[i]) window.scrollTo({top:cards[i].getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
