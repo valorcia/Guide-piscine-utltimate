@@ -154,9 +154,24 @@ function plausibleSnippet(): string {
   return `<script defer data-domain="${domain}" src="https://plausible.io/js/script.js"></script>`;
 }
 
+function rewriteLegacyLinks(html: string): string {
+  // Les HTML d'origine contenaient des liens entre fichiers locaux.
+  // On les remappe vers les routes Next.js.
+  return html
+    .replace(/href="Fini l'eau verte\.html"/g, 'href="/vente"')
+    .replace(/href="Fini l&apos;eau verte\.html"/g, 'href="/vente"')
+    .replace(/href="OTO1 - Pack Outils\.html"/g, 'href="/oto1"')
+    .replace(/href="OTO2 - Fiches Urgences\.html"/g, 'href="/oto2"')
+    .replace(/href="Bundle complet\.html"/g, 'href="/oto3"')
+    .replace(/href="BUNDLE-page-vente\.html"/g, 'href="/bundle"')
+    .replace(/href="R%C3%A9sum%C3%A9 du guide\.html"/g, 'href="/resume"')
+    .replace(/href="Résumé du guide\.html"/g, 'href="/resume"');
+}
+
 export function loadHtmlPage(filename: string, productId: ProductId): string {
   const filePath = path.join(process.cwd(), "html-sources", filename);
-  const html = fs.readFileSync(filePath, "utf8");
+  const raw = fs.readFileSync(filePath, "utf8");
+  const html = rewriteLegacyLinks(raw);
   const checkout = CHECKOUT_SCRIPT(productId);
   const analytics = plausibleSnippet();
 
@@ -168,6 +183,19 @@ export function loadHtmlPage(filename: string, productId: ProductId): string {
     out = out.replace("</body>", `${checkout}</body>`);
   } else {
     out = out + checkout;
+  }
+  return out;
+}
+
+export function loadStaticPage(filename: string): string {
+  // Sans script de checkout : utilisé pour les pages de contenu (résumé, etc.).
+  // On rewrite quand même les liens legacy et on injecte Plausible.
+  const filePath = path.join(process.cwd(), "html-sources", filename);
+  const raw = fs.readFileSync(filePath, "utf8");
+  let out = rewriteLegacyLinks(raw);
+  const analytics = plausibleSnippet();
+  if (analytics && out.includes("</head>")) {
+    out = out.replace("</head>", `${analytics}</head>`);
   }
   return out;
 }
