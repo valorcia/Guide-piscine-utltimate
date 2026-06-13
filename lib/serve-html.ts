@@ -148,14 +148,28 @@ function nextStepFor(productId: ProductId): string {
   }
 }
 
+function plausibleSnippet(): string {
+  const domain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
+  if (!domain) return "";
+  return `<script defer data-domain="${domain}" src="https://plausible.io/js/script.js"></script>`;
+}
+
 export function loadHtmlPage(filename: string, productId: ProductId): string {
   const filePath = path.join(process.cwd(), "html-sources", filename);
   const html = fs.readFileSync(filePath, "utf8");
-  const script = CHECKOUT_SCRIPT(productId);
-  if (html.includes("</body>")) {
-    return html.replace("</body>", `${script}</body>`);
+  const checkout = CHECKOUT_SCRIPT(productId);
+  const analytics = plausibleSnippet();
+
+  let out = html;
+  if (analytics && out.includes("</head>")) {
+    out = out.replace("</head>", `${analytics}</head>`);
   }
-  return html + script;
+  if (out.includes("</body>")) {
+    out = out.replace("</body>", `${checkout}</body>`);
+  } else {
+    out = out + checkout;
+  }
+  return out;
 }
 
 export function htmlResponse(body: string): Response {
