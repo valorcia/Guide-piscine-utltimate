@@ -43,10 +43,11 @@ export const PRODUCTS: Record<ProductId, Product> = {
   },
   bundle: {
     id: "bundle",
-    name: "Bundle complet — Les 4 guides",
-    description: "Outils + Fiches + Saison + Électrolyse Sel",
+    name: "Bundle complet — Guide + 4 PDFs",
+    description: "Fini l'eau verte + Outils + Fiches + Saison + Électrolyse Sel",
     priceCents: 4900,
     files: [
+      { filename: "fini-leau-verte.pdf", label: "Fini l'eau verte (guide principal)" },
       { filename: "kit-outils-premium.pdf", label: "Kit Outils Premium" },
       { filename: "kit-fiches-urgences.pdf", label: "Kit Fiches Urgences" },
       { filename: "guide-saison-parfaite.pdf", label: "Guide Saison Parfaite" },

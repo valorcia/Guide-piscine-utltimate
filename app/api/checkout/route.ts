@@ -25,13 +25,18 @@ function nextOtoPath(productId: ProductId): string {
   }
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as { product?: string };
+    const body = (await req.json()) as { product?: string; email?: string };
     const product = getProduct(body.product || "");
     if (!product) {
       return NextResponse.json({ error: "Unknown product" }, { status: 400 });
     }
+
+    const email = (body.email || "").trim().toLowerCase();
+    const validEmail = EMAIL_RE.test(email) ? email : undefined;
 
     const baseUrl = getBaseUrl(req);
     const stripe = getStripe();
@@ -53,8 +58,10 @@ export async function POST(req: NextRequest) {
         },
       ],
       customer_creation: "always",
+      customer_email: validEmail,
       metadata: {
         products: product.id,
+        ...(validEmail ? { email: validEmail } : {}),
       },
       success_url: `${baseUrl}${nextOtoPath(product.id)}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/vente`,
