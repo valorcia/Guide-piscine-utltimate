@@ -29,10 +29,21 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as { product?: string; email?: string };
-    const product = getProduct(body.product || "");
-    if (!product) {
-      return NextResponse.json({ error: "Unknown product" }, { status: 400 });
+    const body = (await req.json()) as { product?: string; products?: string[]; email?: string };
+
+    // Support backward compat (single product) + cart multi-produits
+    const rawIds = Array.isArray(body.products) && body.products.length > 0
+      ? body.products
+      : body.product
+      ? [body.product]
+      : [];
+
+    const products = rawIds
+      .map((id) => getProduct(id))
+      .filter((p): p is NonNullable<ReturnType<typeof getProduct>> => p !== null);
+
+    if (products.length === 0) {
+      return NextResponse.json({ error: "Unknown product(s)" }, { status: 400 });
     }
 
     const email = (body.email || "").trim().toLowerCase();
@@ -41,29 +52,32 @@ export async function POST(req: NextRequest) {
     const baseUrl = getBaseUrl(req);
     const stripe = getStripe();
 
+    // Si plusieurs produits OU si c'est le bundle : on saute le tunnel OTO
+    // et on envoie direct sur /success. Sinon on garde le funnel (vente seule).
+    const isCart = products.length > 1 || products[0].id === "bundle";
+    const successPath = isCart ? "/success" : nextOtoPath(products[0].id);
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
-      line_items: [
-        {
-          quantity: 1,
-          price_data: {
-            currency: "eur",
-            unit_amount: product.priceCents,
-            product_data: {
-              name: product.name,
-              description: product.description,
-            },
+      line_items: products.map((p) => ({
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: p.priceCents,
+          product_data: {
+            name: p.name,
+            description: p.description,
           },
         },
-      ],
+      })),
       customer_creation: "always",
       customer_email: validEmail,
       metadata: {
-        products: product.id,
+        products: products.map((p) => p.id).join(","),
         ...(validEmail ? { email: validEmail } : {}),
       },
-      success_url: `${baseUrl}${nextOtoPath(product.id)}?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${baseUrl}${successPath}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/vente`,
     });
 
