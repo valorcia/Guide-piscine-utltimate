@@ -3,5 +3,5 @@ import { htmlResponse, loadHtmlPage } from "@/lib/serve-html";
 export const dynamic = "force-static";
 
 export function GET() {
-  return htmlResponse(loadHtmlPage("oto1.html", "outils", { sticky: true }));
+  return htmlResponse(loadHtmlPage("oto1.html", "outils", { direct: true, sticky: true }));
 }

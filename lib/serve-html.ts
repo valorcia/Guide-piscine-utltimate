@@ -170,7 +170,57 @@ function rewriteLegacyLinks(html: string): string {
     .replace(/href="fev\.css"/g, 'href="/fev.css"');
 }
 
-export function loadHtmlPage(filename: string, productId: ProductId): string {
+const DIRECT_SALE_CSS = `
+<style>
+  /* Mode vente directe : on masque le bouton "Non merci" du tunnel et le bandeau étape */
+  .cta-decline{display:none !important}
+  .tunnel{display:none !important}
+</style>`;
+
+const STICKY_BUNDLE_HTML = `
+<style>
+  #flv-sticky{position:fixed;left:0;right:0;bottom:0;z-index:9998;background:#0A2540;color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;box-shadow:0 -8px 30px -10px rgba(0,0,0,0.35);font-family:'Inter',system-ui,sans-serif;font-size:14px;letter-spacing:0.01em}
+  #flv-sticky-txt{opacity:0.92}
+  #flv-sticky-txt b{color:#E8A020;font-weight:700}
+  #flv-sticky-cta{background:#E8A020;color:#0A2540;font-weight:700;padding:9px 18px;border-radius:2px;text-decoration:none;white-space:nowrap;font-size:13px;letter-spacing:0.02em;transition:transform 0.2s}
+  #flv-sticky-cta:hover{transform:translateY(-1px)}
+  #flv-sticky-close{background:none;border:none;color:rgba(255,255,255,0.4);font-size:18px;cursor:pointer;padding:0 4px;line-height:1}
+  #flv-sticky-close:hover{color:#fff}
+  body{padding-bottom:64px !important}
+  @media(max-width:560px){
+    #flv-sticky{font-size:13px;padding:11px 16px;gap:12px}
+    #flv-sticky-cta{padding:8px 14px}
+  }
+</style>
+<div id="flv-sticky" role="complementary">
+  <span id="flv-sticky-txt">Pack complet : guide + 4 PDFs <b>49€</b> au lieu de 98€</span>
+  <a href="/bundle" id="flv-sticky-cta">Voir le pack →</a>
+  <button id="flv-sticky-close" aria-label="Fermer">×</button>
+</div>
+<script>
+(function(){
+  try {
+    if(sessionStorage.getItem('flv_sticky_closed')==='1'){
+      var el=document.getElementById('flv-sticky'); if(el){ el.remove(); document.body.style.paddingBottom=''; }
+      return;
+    }
+  } catch(_){}
+  var btn=document.getElementById('flv-sticky-close');
+  if(btn){ btn.addEventListener('click', function(){
+    var el=document.getElementById('flv-sticky'); if(el){ el.remove(); document.body.style.paddingBottom=''; }
+    try { sessionStorage.setItem('flv_sticky_closed','1'); } catch(_){}
+  });}
+})();
+</script>`;
+
+export interface PageOptions {
+  /** Cache le bouton "Non merci" du tunnel (pour les pages /outils, /fiches en vente directe). */
+  direct?: boolean;
+  /** Affiche le sticky CTA "Pack 49€" en bas de page. */
+  sticky?: boolean;
+}
+
+export function loadHtmlPage(filename: string, productId: ProductId, options: PageOptions = {}): string {
   const filePath = path.join(process.cwd(), "html-sources", filename);
   const raw = fs.readFileSync(filePath, "utf8");
   const html = rewriteLegacyLinks(raw);
@@ -181,15 +231,19 @@ export function loadHtmlPage(filename: string, productId: ProductId): string {
   if (analytics && out.includes("</head>")) {
     out = out.replace("</head>", `${analytics}</head>`);
   }
+  if (options.direct && out.includes("</head>")) {
+    out = out.replace("</head>", `${DIRECT_SALE_CSS}</head>`);
+  }
+  const sticky = options.sticky ? STICKY_BUNDLE_HTML : "";
   if (out.includes("</body>")) {
-    out = out.replace("</body>", `${checkout}</body>`);
+    out = out.replace("</body>", `${sticky}${checkout}</body>`);
   } else {
-    out = out + checkout;
+    out = out + sticky + checkout;
   }
   return out;
 }
 
-export function loadStaticPage(filename: string): string {
+export function loadStaticPage(filename: string, options: { sticky?: boolean } = {}): string {
   // Sans script de checkout : utilisé pour les pages de contenu (résumé, etc.).
   // On rewrite quand même les liens legacy et on injecte Plausible.
   const filePath = path.join(process.cwd(), "html-sources", filename);
@@ -198,6 +252,9 @@ export function loadStaticPage(filename: string): string {
   const analytics = plausibleSnippet();
   if (analytics && out.includes("</head>")) {
     out = out.replace("</head>", `${analytics}</head>`);
+  }
+  if (options.sticky && out.includes("</body>")) {
+    out = out.replace("</body>", `${STICKY_BUNDLE_HTML}</body>`);
   }
   return out;
 }
