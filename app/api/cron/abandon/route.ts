@@ -4,10 +4,12 @@ import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
-// Fenêtre serrée alignée sur le cron (30 min) :
-// chaque session abandonnée tombe dans la fenêtre une seule fois.
-const RELANCE_WINDOW_MIN_MIN = 60; // ≥ 1h après la création
-const RELANCE_WINDOW_MAX_MIN = 95; // ≤ 1h35 (cron = */30, marge de 5min pour les retards)
+// Plan Vercel Hobby = 1 cron par jour max.
+// Fenêtre alignée sur un cron quotidien (schedule "0 12 * * *") :
+// on relance les sessions créées entre 1h et 25h avant le run.
+// Chaque session tombe dans la fenêtre une seule fois (couverture 24h + 1h de marge).
+const RELANCE_WINDOW_MIN_MIN = 60;
+const RELANCE_WINDOW_MAX_MIN = 25 * 60;
 
 function getBaseUrl(): string {
   return (

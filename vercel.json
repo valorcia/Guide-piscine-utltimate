@@ -9,6 +9,6 @@
     "app/api/cron/abandon/route.ts": { "maxDuration": 60 }
   },
   "crons": [
-    { "path": "/api/cron/abandon", "schedule": "*/30 * * * *" }
+    { "path": "/api/cron/abandon", "schedule": "0 12 * * *" }
   ]
 }
